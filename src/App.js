@@ -17,7 +17,7 @@ function App() {
 
 
   const [cart,setCart] = useState([]);
-  const [cartItems, setCartItems] = useState(userDetails.cart);
+  const [cartItems, setCartItems] = useState(userDetails? userDetails.cart : []);
 
 
   useEffect(()=>{
