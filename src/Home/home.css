@@ -1,0 +1,28 @@
+.homePage{
+    margin-top: 100px;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-around;
+}
+
+.cardWrapper{
+    width: 300px;
+    height: 500px;
+    display: flex !important;
+    flex-direction: column !important;
+    justify-content: center !important;
+}
+
+.cardWrapper img{
+    width: 300px;
+    height: 300px;
+}
+
+.contentWrapper{
+    display: grid;
+}
+
+.itemName{
+    text-align: center;
+    color: darkorchid;
+}

@@ -1,0 +1,19 @@
+.ordersPageItemImage {
+    width: 400px;
+    height: 400px;
+}
+
+.ordersEnclosure {
+    padding: 70px 0 0 70px;
+    gap: 40px;
+    display: flex;
+}
+
+.BillingDetailsEnclosure,
+.ordersPageButtonEnclosure {
+    padding-left: 70px;
+}
+
+.ordersPageButtonEnclosure {
+    margin-top: 40px;
+}

@@ -1,0 +1,22 @@
+.navbarEnclosure{
+    display: flex;
+    align-items: center !important;
+    gap: 30px;
+    background-color: cadetblue;
+    color: white;
+    height: 70px;
+    width: 100%;
+    font-size: x-large;
+    padding: 0px 16px;
+    position: fixed;
+    top: 0;
+}
+
+.userNameInNavbar span{
+    font-size: x-large;
+    font-weight: bolder;
+} 
+
+.userNameInNavbar{
+    width: 84%;
+}
