@@ -7,6 +7,7 @@
     padding: 70px 0 0 70px;
     gap: 40px;
     display: flex;
+    flex-wrap: wrap;
 }
 
 .BillingDetailsEnclosure,
@@ -17,3 +18,9 @@
 .ordersPageButtonEnclosure {
     margin-top: 40px;
 }
+
+.ordersPageButtonEnclosure{
+    display: flex;
+    gap: 20px;
+}
+

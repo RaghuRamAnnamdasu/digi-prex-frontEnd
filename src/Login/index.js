@@ -35,7 +35,6 @@ export function Login() {
             console.log("error", error)
         })
 
-        // console.log(result);
 
         if(result.message === "Successful Login") {
             localStorage.setItem("user", JSON.stringify({token: result.token, userName: result.name, userId : result.id, email: result.email, type: result.type, cart: result.cart}));

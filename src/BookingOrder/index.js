@@ -16,16 +16,16 @@ export function BookingOrder({cart,setCart, setCartItems, cartItems,addItemsToCa
     userDetails = userDetails && JSON.parse(userDetails);
 
     useEffect(()=>{
-        getCart();
+        userDetails && getCart();
     },[]);
     
 
     async function getCart(){
+        console.log("userId in getCart api call fn().........",userDetails?.userId);
         let result = await fetch(`${API}/items/getCart/${userDetails?.userId}`).then((data)=>{
           console.log("data++++++++", data);
           return data.json();
         });
-        console.log("result..........",result)
         setCart(result);
     }
 
@@ -45,7 +45,6 @@ export function BookingOrder({cart,setCart, setCartItems, cartItems,addItemsToCa
     }
 
     const onToken = async (token)=>{
-        // console.log("token",token);
         const orderData = {
             userId : userDetails.userId,
             bookedTime : new Date(),
@@ -109,7 +108,6 @@ export function BookingOrder({cart,setCart, setCartItems, cartItems,addItemsToCa
                     >
                         <Button variant="contained" color = "primary">Proceed To Payment</Button>
                 </StripeCheckout>
-                {/* <Button variant = "contained" color = "primary" onClick = {proceedToPayment}>Proceed To Payment</Button> */}
             </div>
         </div>
     );

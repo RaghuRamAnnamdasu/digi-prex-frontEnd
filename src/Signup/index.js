@@ -100,13 +100,6 @@ export function SignUp() {
                 <Button type="submit" variant="contained">Sign up</Button>
                 <div className="accountExists">Already have an account? <span onClick={() => navigate("/login")}>&nbsp;Login</span></div>
             </form>
-            {/* <div className="signUpRightWrapper">
-                <div>
-                    <h2>Sign Up</h2>
-                    <div>We do not share your details with anyone</div>
-                </div>
-                <div className="portalDescription">"The ultimate guide to choosing the best online training platforms for Web Development"</div>
-            </div> */}
       </div>
     );
 }

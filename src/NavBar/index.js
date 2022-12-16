@@ -15,7 +15,7 @@ export function NavBar({cartItems,cart}){
     
 
     async function sendNotification(){
-        await fetch(`${API}/items/sendNotification/${userDetails?.email}`).then((data)=>data.json());
+        await fetch(`${API}/items/sendNotification/${userDetails?.email}/${userDetails?.userId}`).then((data)=>data.json());
     }
 
     const signOut = () => {

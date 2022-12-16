@@ -19,7 +19,6 @@ export function Home({cart,setCart,cartItems,setCartItems,addItemsToCart}){
 
     async function getItems(){
         const result = await fetch(`${API}/items/getAllItems`).then((data)=>data.json());
-        console.log("getItems result..........",result);
         setItemsList(result);
     }
 
@@ -49,14 +48,19 @@ function ItemCard({itemData, userDetails, cartItems, setCartItems, addItemsToCar
     const navigate = useNavigate();
 
     const addToCart = ()=>{
-        console.log("cartItemsBeforeAddition........",cartItems);
         setCartItems([...cartItems,itemData._id]);
+        let loggedInUserDetails = JSON.parse(localStorage.getItem("user"));
+        loggedInUserDetails.cart = [...cartItems,itemData._id];
+        localStorage.setItem("user", JSON.stringify(loggedInUserDetails));
         setIsItemAdded(true);
     }
 
     const removeFromCart = ()=>{
         let tempData = cartItems.filter((cartItemId) => cartItemId !== itemData._id);
         setCartItems(tempData);
+        let loggedInUserDetails = JSON.parse(localStorage.getItem("user"));
+        loggedInUserDetails.cart = tempData;
+        localStorage.setItem("user", JSON.stringify(loggedInUserDetails));
         setIsItemAdded(false);
     }
 

@@ -4,7 +4,7 @@ import { Login } from './Login';
 import { SignUp } from './Signup';
 import { ForgotPassword } from './ForgotPassword';
 import { ResetPassword } from './ResetPassword';
-import { Navigate, Route, Routes } from 'react-router-dom';
+import { Navigate, Route, Routes, useParams } from 'react-router-dom';
 import { Home } from './Home';
 import { BookingOrder } from './BookingOrder';
 import { useEffect, useState } from 'react';
@@ -21,14 +21,19 @@ function App() {
 
 
   useEffect(()=>{
-    addItemsToCart(cartItems);
+    userDetails && addItemsToCart(cartItems);
   },[cartItems]);
 
-    useEffect(()=>{
-      window.addEventListener("beforeunload", function (event) {
-        sendNotification();
-      })
-    },[]);
+
+  useEffect(()=>{
+    window.addEventListener("beforeunload", function (event) {
+      // var isReload = window.performance.getEntriesByType('navigation').map((nav) => nav.type);
+      // if(!isReload.includes('reload')){
+      //   sendNotification();
+      // }
+      sendNotification();
+    })
+  },[]);
 
   async function addItemsToCart(data){
     const addDataToCart = await fetch(`${API}/items/updateCartItem/${userDetails.userId}`,{
@@ -42,8 +47,8 @@ function App() {
   
 
   async function sendNotification(){
-    await fetch(`${API}/items/sendNotification/${userDetails?.email}`).then((data)=>data.json());
-}
+    await fetch(`${API}/items/sendNotification/${userDetails?.email}/${userDetails?.userId}`).then((data)=>data.json());
+  }
 
   return (
     <div className="App">
@@ -55,7 +60,7 @@ function App() {
         <Route path="/reset-password/:id/:token" element={<ResetPassword />}/>
         <Route path="/home" element={<NavigateHomeComponent cart={cart} setCart={setCart} cartItems={cartItems} setCartItems={setCartItems}/>} addItemsToCart={addItemsToCart}/>
         <Route path="/bookOrder" element={<NavigateBookingOrderComponent cart={cart} setCart={setCart} setCartItems={setCartItems} cartItems={cartItems} addItemsToCart={addItemsToCart}/>}/>
-        <Route path="/bookOrder/fromLink" element={<Login />}/>
+        <Route path="/bookOrder/fromLink/:userId" element={<RouteTOBookings cart={cart} setCart={setCart} setCartItems={setCartItems} cartItems={cartItems} addItemsToCart={addItemsToCart}/>}/>
       </Routes>
     </div>
   );
@@ -71,5 +76,27 @@ export function NavigateBookingOrderComponent({cart,setCart,setCartItems, cartIt
   return (
     localStorage.getItem("user") ? <BookingOrder cart={cart} setCart={setCart} setCartItems={setCartItems} cartItems={cartItems} addItemsToCart={addItemsToCart}/> : <Navigate to="/login" />
   );
+}
+
+
+export function RouteTOBookings({cart,setCart,setCartItems, cartItems, addItemsToCart}){
+
+  const[isLocalStorageSet, updateIsLocalStorageSet] = useState(false);
+
+  const {userId} = useParams();
+  async function getUserDetails(){
+    let result = await fetch(`${API}/users/getUserDetails/${userId}`).then((data)=>data.json());
+    localStorage.setItem("user",JSON.stringify({userName: result.userName, userId : result._id, email: result.email, type: result.type, cart: result.cart}));
+    updateIsLocalStorageSet(true);
+    setCartItems(result.cart);
+  }
+
+  useEffect(()=>{
+    getUserDetails();
+  },[]);
+
+  return(
+    isLocalStorageSet && <BookingOrder cart={cart} setCart={setCart} setCartItems={setCartItems} cartItems={cartItems} addItemsToCart={addItemsToCart}/>
+  )
 }
 export default App;
